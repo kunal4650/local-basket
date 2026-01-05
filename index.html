@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Local Basket - Hyperlocal Delivery</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ff5200">
+</head>
+<body>
+
+    <div id="loader" class="loader-screen">
+        <div class="spinner"></div>
+        <p>Locating stores nearby...</p>
+    </div>
+
+    <div id="auth-modal" class="modal hidden">
+        <div class="modal-content bottom-sheet">
+            <h2>Welcome to Local Basket</h2>
+            <p class="subtext">Log in to order groceries</p>
+            <form id="login-form">
+                <input type="tel" id="login-phone" placeholder="Phone Number" required pattern="[0-9]{10}">
+                <div id="otp-section" class="hidden">
+                    <input type="text" id="login-otp" placeholder="Enter OTP (1234)" maxlength="4">
+                    <input type="password" id="login-pass" placeholder="Set/Enter Password" class="hidden">
+                </div>
+                <button type="submit" class="btn-primary" id="login-btn">Continue</button>
+            </form>
+            <p class="text-center mt-2"><small>New here? We'll create an account automatically.</small></p>
+        </div>
+    </div>
+
+    <div id="location-modal" class="modal hidden">
+        <div class="modal-content bottom-sheet">
+            <h3>Set Delivery Location</h3>
+            <button id="detect-loc-btn" class="btn-outline-primary">
+                📍 Use Current Location
+            </button>
+            <p class="text-center">OR</p>
+            <input type="text" id="manual-address" placeholder="Enter Area / Pincode">
+            <button id="save-loc-btn" class="btn-primary">Confirm Location</button>
+        </div>
+    </div>
+
+    <header class="app-header">
+        <div class="location-header" onclick="app.openLocationModal()">
+            <div class="loc-icon">📍</div>
+            <div class="loc-details">
+                <h4 id="header-address">Select Location</h4>
+                <small id="header-eta">Loading...</small>
+            </div>
+        </div>
+        <div class="user-actions">
+            <span id="loyalty-badge" class="hidden">🏆 <span id="points-display">0</span></span>
+            <button onclick="app.logout()" class="btn-sm">Logout</button>
+        </div>
+    </header>
+
+    <main id="main-container">
+        <div class="search-bar-container">
+            <input type="text" id="global-search" placeholder="Search 'milk', 'chips'...">
+        </div>
+
+        <div id="banner-slider" class="banner-container">
+            </div>
+
+        <section class="section">
+            <h3>Shop by Category</h3>
+            <div id="category-grid" class="category-grid">
+                </div>
+        </section>
+
+        <section class="section">
+            <h3>Nearby Stores</h3>
+            <div id="shop-list" class="shop-list">
+                </div>
+        </section>
+
+        <section class="section">
+            <h3>Recommended for You</h3>
+            <div id="product-feed" class="product-grid">
+                </div>
+        </section>
+    </main>
+
+    <div id="cart-float" class="cart-float hidden" onclick="app.toggleCart()">
+        <div class="cart-info">
+            <span id="cart-count">0 Items</span>
+            <span id="cart-total">₹0</span>
+        </div>
+        <div class="view-cart-btn">View Cart ></div>
+    </div>
+
+    <div id="cart-overlay" class="modal hidden">
+        <div class="modal-content full-height">
+            <div class="modal-header">
+                <h3>Your Cart</h3>
+                <button onclick="app.toggleCart()">✕</button>
+            </div>
+            <div id="cart-items" class="cart-items-container">
+                </div>
+            
+            <div class="cart-summary">
+                <div class="bill-row"><span>Item Total</span><span id="bill-item-total">₹0</span></div>
+                <div class="bill-row"><span>Delivery Fee</span><span id="bill-delivery">₹0</span></div>
+                <div class="bill-row hidden" id="dist-surcharge-row"><span>Distance Surcharge</span><span id="bill-surcharge">₹0</span></div>
+                <div class="bill-row total"><span>To Pay</span><span id="bill-grand-total">₹0</span></div>
+                
+                <div class="delivery-promise">
+                    ⚡ Delivery in <span id="cart-eta">30-45 mins</span>
+                </div>
+
+                <button id="checkout-btn" class="btn-primary w-100">Order via WhatsApp</button>
+            </div>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item active" onclick="app.nav('home')">🏠 Home</a>
+        <a href="#" class="nav-item" onclick="app.nav('orders')">📦 Orders</a>
+        <a href="#" class="nav-item" onclick="app.nav('account')">👤 Account</a>
+    </nav>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Not Found</title> <link rel="stylesheet" href="style.css">
+    <style>
+        #admin-panel { display: none; }
+        .decoy { text-align: center; padding: 50px; font-family: sans-serif; }
+    </style>
+</head>
+<body>
+
+    <div id="decoy-screen" class="decoy">
+        <h1>404</h1>
+        <p>Page not found.</p>
+    </div>
+
+    <div id="admin-auth" class="modal hidden">
+        <div class="modal-content">
+            <h2>System Access</h2>
+            <input type="password" id="admin-key" placeholder="Access Key">
+            <input type="password" id="admin-pass" placeholder="Password">
+            <button id="admin-login-btn" class="btn-primary">Verify</button>
+        </div>
+    </div>
+
+    <div id="admin-panel">
+        <header class="admin-header dark">
+            <h2>MASTER CONTROL</h2>
+            <button onclick="adminApp.logout()" class="btn-sm btn-danger">EXIT</button>
+        </header>
+        
+        <div class="admin-grid">
+            <div class="card">
+                <h3>Global Config</h3>
+                <label>Base Delivery Fee: <input type="number" id="conf-fee"></label>
+                <label>Free Delivery > ₹: <input type="number" id="conf-free"></label>
+                <label>Commission %: <input type="number" id="conf-comm"></label>
+                <button onclick="adminApp.saveConfig()" class="btn-primary mt-1">Update Config</button>
+            </div>
+
+            <div class="card">
+                <h3>Kill Switch</h3>
+                <p>Emergency Stop for all Shops</p>
+                <button onclick="adminApp.killSwitch()" class="btn-danger w-100">DISABLE PLATFORM</button>
+            </div>
+
+            <div class="card full-width">
+                <h3>Platform Analytics</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-stats">
+                        </tbody>
+                </table>
+            </div>
+
+            <div class="card full-width">
+                <h3>Shop Approvals / Management</h3>
+                <div id="admin-shop-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

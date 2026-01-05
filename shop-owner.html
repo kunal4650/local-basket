@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Basket - Partner App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-body">
+    <div id="owner-login" class="login-container">
+        <h2>Partner Login</h2>
+        <form id="owner-login-form">
+            <input type="tel" id="owner-phone" placeholder="Phone Number" required>
+            <input type="password" id="owner-pass" placeholder="Password" required>
+            <button type="submit" class="btn-primary">Login</button>
+        </form>
+    </div>
+
+    <div id="owner-dashboard" class="hidden">
+        <header class="admin-header">
+            <h3>My Shop</h3>
+            <div class="toggle-switch">
+                <label>Status:</label>
+                <input type="checkbox" id="shop-status-toggle">
+                <span class="slider"></span>
+            </div>
+            <button onclick="ownerApp.logout()">Logout</button>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="ownerApp.switchTab('orders')">Orders</button>
+            <button class="tab-btn" onclick="ownerApp.switchTab('inventory')">Inventory</button>
+            <button class="tab-btn" onclick="ownerApp.switchTab('analytics')">Analytics</button>
+        </div>
+
+        <div id="tab-orders" class="tab-content active">
+            <div id="orders-list"></div>
+        </div>
+
+        <div id="tab-inventory" class="tab-content">
+            <button class="btn-primary mb-2" onclick="ownerApp.showAddProduct()">+ Add Product</button>
+            <div id="inventory-list"></div>
+        </div>
+        
+        <div id="tab-analytics" class="tab-content">
+            <div class="stat-card">
+                <h4>Today's Sales</h4>
+                <h2 id="today-sales">₹0</h2>
+            </div>
+            <div class="stat-card">
+                <h4>Pending Orders</h4>
+                <h2 id="pending-count">0</h2>
+            </div>
+        </div>
+    </div>
+
+    <div id="add-product-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Add/Edit Product</h3>
+            <form id="product-form">
+                <input type="text" id="prod-name" placeholder="Product Name" required>
+                <input type="number" id="prod-price" placeholder="Price" required>
+                <input type="text" id="prod-cat" placeholder="Category" required>
+                <input type="number" id="prod-stock" placeholder="Stock Qty" required>
+                <button type="submit" class="btn-primary">Save</button>
+                <button type="button" class="btn-secondary" onclick="document.getElementById('add-product-modal').classList.add('hidden')">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="shop-owner.js"></script>
+</body>
+</html>
